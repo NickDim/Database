@@ -4,11 +4,14 @@ import java.sql.*;
 
 public class Database {
     public static void main(String args[]){
-        insertStatement();
+        String uifName = "fName";
+        String uilName = "lName";
+
+        insertStatement(uifName, uilName);
         selectStatement();
     }
 
-    private static void insertStatement() {
+    private static void insertStatement(String uifName, String uilName) {
         try {
             MysqlDataSource dataSource = new MysqlDataSource();
             dataSource.setUser("root");
@@ -19,7 +22,7 @@ public class Database {
 
             Connection con = dataSource.getConnection();
             con.setAutoCommit(false);
-            PreparedStatement stmt = con.prepareStatement("INSERT INTO nickdimfans (ID, FirstName, LastName)\nVALUES (4, 'Kassin', 'Farah')");
+            PreparedStatement stmt = con.prepareStatement("INSERT INTO nickdimfans (FirstName, LastName)\nVALUES (+ " + uifName + "," + uilName + ")");
             stmt.executeUpdate();
             con.commit();
             con.close();
