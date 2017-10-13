@@ -4,14 +4,14 @@ import java.sql.*;
 
 public class Database {
     public static void main(String args[]){
-        String uifName = "fName";
-        String uilName = "lName";
-
-        insertStatement(uifName, uilName);
-        selectStatement();
+        Database database = new Database();
+        String uifName = "''";
+        String uilName = "''";
+        database.insertStatement(uifName, uilName);
+        database.selectStatement();
     }
 
-    private static void insertStatement(String uifName, String uilName) {
+    public void insertStatement(String uifName, String uilName) {
         try {
             MysqlDataSource dataSource = new MysqlDataSource();
             dataSource.setUser("root");
@@ -32,7 +32,7 @@ public class Database {
         }
     }
 
-    private static void selectStatement() {
+    public void selectStatement() {
         try {
             MysqlDataSource dataSource = new MysqlDataSource();
             dataSource.setUser("root");
