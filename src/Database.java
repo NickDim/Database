@@ -26,9 +26,10 @@ public class Database {
 
             if (con != null) {
                 while(rs.next()) {
-                    rs.getInt("ID");
-                    rs.getString("FirstName");
-                    rs.getString("LastName");
+                    int ID = rs.getInt("ID");
+                    String fName = rs.getString("FirstName");
+                    String lName = rs.getString("LastName");
+                    System.out.println("ID: " + ID + " First Name: " + fName + " Last Name: " + lName + "\n");
                 }
                 con.commit();
             }
