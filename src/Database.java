@@ -6,14 +6,14 @@ import java.sql.Statement;
 
 public class Database {
     public static void main(String args[]){
-        databaseConnector();
+        selectStatement();
     }
 
-    private static void databaseConnector() {
+    private static void selectStatement() {
         try {
             MysqlDataSource dataSource = new MysqlDataSource();
             dataSource.setUser("root");
-            dataSource.setPassword("babapatka");
+            dataSource.setPassword("password");
             dataSource.setServerName("localhost");
             dataSource.setPort(3306);
             dataSource.setDatabaseName("nickdim");
@@ -25,12 +25,16 @@ public class Database {
             con.setAutoCommit(false);
 
             if (con != null) {
+                StringBuilder selectStatement = new StringBuilder();
                 while(rs.next()) {
-                    int ID = rs.getInt("ID");
-                    String fName = rs.getString("FirstName");
-                    String lName = rs.getString("LastName");
-                    System.out.println("ID: " + ID + " First Name: " + fName + " Last Name: " + lName + "\n");
+                    selectStatement.append("ID: ");
+                    selectStatement.append(rs.getInt("ID"));
+                    selectStatement.append("\t First Name: ");
+                    selectStatement.append(rs.getString("FirstName"));
+                    selectStatement.append("\t Last Name: ");
+                    selectStatement.append(rs.getString("LastName"));
                 }
+                System.out.println(selectStatement);
                 con.commit();
             }
             con.close();
