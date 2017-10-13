@@ -1,12 +1,32 @@
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 
 public class Database {
     public static void main(String args[]){
+        insertStatement();
         selectStatement();
+    }
+
+    private static void insertStatement() {
+        try {
+            MysqlDataSource dataSource = new MysqlDataSource();
+            dataSource.setUser("root");
+            dataSource.setPassword("password");
+            dataSource.setServerName("localhost");
+            dataSource.setPort(3306);
+            dataSource.setDatabaseName("nickdim");
+
+            Connection con = dataSource.getConnection();
+            con.setAutoCommit(false);
+            PreparedStatement stmt = con.prepareStatement("INSERT INTO nickdimfans (ID, FirstName, LastName)\nVALUES (4, 'Kassin', 'Farah')");
+            stmt.executeUpdate();
+            con.commit();
+            con.close();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
     private static void selectStatement() {
@@ -32,7 +52,7 @@ public class Database {
                     selectStatement.append("\t First Name: ");
                     selectStatement.append(rs.getString("FirstName"));
                     selectStatement.append("\t Last Name: ");
-                    selectStatement.append(rs.getString("LastName"));
+                    selectStatement.append(rs.getString("LastName") + "\n");
                 }
                 System.out.println(selectStatement);
                 con.commit();
