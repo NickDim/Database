@@ -48,7 +48,10 @@ public class Database {
     public void insertStatement(String uifName, String uilName) {
         try {
 
-            PreparedStatement stmt = con.prepareStatement("INSERT INTO nickdimfans (FirstName, LastName)\nVALUES (+ " + uifName + "," + uilName + ")");
+            PreparedStatement stmt = con.prepareStatement("INSERT INTO" +
+                    " nickdimfans (FirstName, LastName)\n" +
+                    "VALUES (+ " + uifName + "," + uilName + ")");
+
             stmt.executeUpdate();
 
         }
