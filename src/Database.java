@@ -9,8 +9,8 @@ public class Database {
 
             Database database = new Database();
 
-            String uifName = "'Velin'";
-            String uilName = "'Dimitrov'";
+            String uifName = "''";
+            String uilName = "''";
 
             Connection con = database.getConnection();
             database.insertStatement(uifName, uilName);
