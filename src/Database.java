@@ -11,9 +11,10 @@ public class Database {
 
             String uifName = "''";
             String uilName = "''";
+            String email = "''";
 
             Connection con = database.getConnection();
-            database.insertStatement(uifName, uilName);
+            database.insertStatement(uifName, uilName, email);
             database.selectStatement();
 
             con.commit();
@@ -45,12 +46,12 @@ public class Database {
         con.setAutoCommit(false);
     }
 
-    public void insertStatement(String uifName, String uilName) {
+    public void insertStatement(String uifName, String uilName, String email) {
         try {
 
             PreparedStatement stmt = con.prepareStatement("INSERT INTO" +
-                    " nickdimfans (FirstName, LastName)\n" +
-                    "VALUES (+ " + uifName + "," + uilName + ")");
+                    " nickdimfans (FirstName, LastName, Email)\n" +
+                    "VALUES (+ " + uifName + "," + uilName + "," + email + ")");
 
             stmt.executeUpdate();
 
