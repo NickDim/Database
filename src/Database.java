@@ -15,7 +15,9 @@ public class Database {
 
             Connection con = database.getConnection();
             database.insertStatement(uifName, uilName, email);
-            database.selectStatement();
+
+            // What sql selected easier for ui
+            StringBuilder selected = database.selectStatement();
 
             con.commit();
             con.close();
@@ -61,7 +63,7 @@ public class Database {
         }
     }
 
-    public void selectStatement() {
+    public StringBuilder selectStatement() {
         try {
 
             Statement stmt = con.createStatement();
@@ -77,12 +79,17 @@ public class Database {
                     selectStatement.append("\t");
                     selectStatement.append(rs.getString("LastName"));
                     selectStatement.append("\n");
+                    selectStatement.append(rs.getString("Email"));
+                    selectStatement.append("\n");
                 }
-                System.out.println(selectStatement);
+                return selectStatement;
             }
         }
         catch(SQLException e){
             e.printStackTrace();
         }
+        StringBuilder error = new StringBuilder();
+        error.append("Error, check java");
+        return error;
     }
 }
