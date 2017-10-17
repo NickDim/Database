@@ -9,9 +9,9 @@ public class Database {
 
             Database database = new Database();
 
-            String uifName = "''";
-            String uilName = "''";
-            String email = "''";
+            String uifName = "'Nick'";
+            String uilName = "'Dimitrov'";
+            String email = "'nikolad21889@isd273.org'";
 
             Connection con = database.getConnection();
             database.insertStatement(uifName, uilName, email);
@@ -71,16 +71,17 @@ public class Database {
 
             if (con != null) {
                 StringBuilder selectStatement = new StringBuilder();
-                selectStatement.append("ID\tFirst Name\tLast Name\n");
+                selectStatement.append("ID\tFirst Name\tLast Name\tEmail\n");
                 while(rs.next()) {
                     selectStatement.append(rs.getInt("ID"));
                     selectStatement.append("\t");
                     selectStatement.append(rs.getString("FirstName"));
                     selectStatement.append("\t");
                     selectStatement.append(rs.getString("LastName"));
-                    selectStatement.append("\n");
+                    selectStatement.append("\t");
                     selectStatement.append(rs.getString("Email"));
                     selectStatement.append("\n");
+                    System.out.println(selectStatement);
                 }
                 return selectStatement;
             }
