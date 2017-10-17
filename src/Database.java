@@ -1,17 +1,16 @@
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-
 import java.sql.*;
 
 public class Database {
 
-    public static void main(String args[]){
+    public static void main(String args[]) {
         try {
 
             Database database = new Database();
 
-            String uifName = "'Nick'";
-            String uilName = "'Dimitrov'";
-            String email = "'nikolad21889@isd273.org'";
+            String uifName = "''";
+            String uilName = "''";
+            String email = "''";
 
             Connection con = database.getConnection();
             database.insertStatement(uifName, uilName, email);
@@ -21,8 +20,7 @@ public class Database {
 
             con.commit();
             con.close();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -57,8 +55,7 @@ public class Database {
 
             stmt.executeUpdate();
 
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -72,7 +69,7 @@ public class Database {
             if (con != null) {
                 StringBuilder selectStatement = new StringBuilder();
                 selectStatement.append("ID\tFirst Name\tLast Name\tEmail\n");
-                while(rs.next()) {
+                while (rs.next()) {
                     selectStatement.append(rs.getInt("ID"));
                     selectStatement.append("\t");
                     selectStatement.append(rs.getString("FirstName"));
@@ -85,8 +82,7 @@ public class Database {
                 }
                 return selectStatement;
             }
-        }
-        catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         StringBuilder error = new StringBuilder();
