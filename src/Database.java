@@ -28,7 +28,7 @@ public class Database {
     private MysqlDataSource dataSource;
     private Connection con;
 
-    private Connection getConnection() {
+    Connection getConnection() {
         return con;
     }
 
@@ -49,13 +49,25 @@ public class Database {
     public void insertStatement(String uifName, String uilName, String email) {
         try {
 
-            PreparedStatement stmt = con.prepareStatement("INSERT INTO" +
+            PreparedStatement insertStatement = con.prepareStatement("INSERT INTO" +
                     " nickdimfans (FirstName, LastName, Email)\n" +
                     "VALUES (+ " + uifName + "," + uilName + "," + email + ")");
 
-            stmt.executeUpdate();
+            insertStatement.executeUpdate();
 
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void clear() {
+        try {
+
+            PreparedStatement clear = con.prepareStatement("DELETE FROM nickdimfans");
+            clear.executeUpdate();
+
+        }
+        catch(SQLException e) {
             e.printStackTrace();
         }
     }
