@@ -8,5 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="mysql-connector-java-5.1.44-bin" level="project" />
+    <orderEntry type="library" name="sendgrid-java-latest" level="project" />
+    <orderEntry type="library" name="com.sendgrid" level="project" />
   </component>
 </module>
