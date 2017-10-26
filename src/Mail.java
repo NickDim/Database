@@ -1,5 +1,8 @@
 import com.sendgrid.*;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.File;
+import java.util.Scanner
 
 public class Mail {
 
@@ -17,7 +20,8 @@ public class Mail {
     public static void main() {
 
         StringBuilder mailReturn = mailer();
-        system.out.println(mailReturn);
+        setEmailHistory(mailReturn);
+        StringBuilder history = getEmailHistory();
 
     }
     public StringBuilder mailer() {
@@ -31,5 +35,30 @@ public class Mail {
         sb.append(response.getStatusCode());
         sb.append(response.getBody());
         sb.append(response.getHeaders());
+
+        return sb;
     }
+
+    private File emails;
+    private PrintWriter writer;
+
+    public void setEmailHistory(StringBuilder mailReturn);
+    this.emails = new File("Documents/emailHistory.txt");
+    this.writer = new PrintWriter(emails);
+
+    writer.println(mailReturn);
+}
+
+private Scanner scanner;
+
+public StringBuilder getEmailHistory() {
+
+    this.emails = new File("Documents/emailHistory.txt");
+    this.scanner = new Scanner(emails);
+    StringBuilder sb = new StringBuilder;
+
+    while(scanner.hasNextLine) {
+        sb.append(scanner.nextLine());
+    }
+    return sb;
 }
