@@ -101,4 +101,18 @@ public class Database {
         error.append("Error, check java");
         return error;
     }
+    public StringBuilder getEmails() {
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT Email FROM nickdimfans");
+            StringBuilder sb = new StringBuilder
+            while (rs.next) {
+                sb.append(rs.getString("Email"));
+            }
+            return sb;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
