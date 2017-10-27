@@ -1,4 +1,5 @@
-apply plugin: "java"
+apply plugin: 'java'
+sourceCompatibility = 1.8
 
 dependencies {
     compile 'com.sendgrid:sendgrid-java:4.1.1'

@@ -9,7 +9,6 @@ public class Mail {
     private Database database = new Database();
 
     private Email from = new Email("nikolad21889@isd273.org");
-    private Email to = new Email(database.getEmails());
     private String subject = "Hello Email world";
     private Content content = new Content("I can't believe this works");
     private Mail mail = new Mail(from, subject, to, content);
@@ -19,16 +18,25 @@ public class Mail {
 
     public static void main() {
 
-        StringBuilder mailReturn = mailer();
+        StringBuilder toEmails = new StringBuilder
+
+        StringBuilder mailReturn = mailer(toEmails);
         setEmailHistory(mailReturn);
         StringBuilder history = getEmailHistory();
 
     }
-    public StringBuilder mailer() {
-        request.setMethod(Method.POST);
-        request.setEndpoint("mail/send");
-        request.setBody(mail.build());
-        Response response = sg.api(request);
+    public StringBuilder mailer(StringBuilder toEmails) {
+
+        while(toEmails.hasNext()) {
+
+            Mail to = new Mail(toEmails.next());
+
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+            Response response = sg.api(request);
+
+        }
 
         StringBuilder sb = new StringBuilder
 

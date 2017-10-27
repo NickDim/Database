@@ -6,10 +6,10 @@ public class UI {
         try {
             Database database = new Database();
 
-            String function = null;
-            String fName = null;
-            String lName = null;
-            String email = null;
+            String function;
+            String fName;
+            String lName;
+            String email;
 
             decider(function, database, fName, lName, email);
 
