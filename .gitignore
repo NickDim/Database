@@ -6,3 +6,6 @@
 
 # IntelliJ
 out/
+
+# SendGrid API Key
+sendgrid.env

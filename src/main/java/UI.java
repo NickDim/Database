@@ -1,31 +1,27 @@
-import java.sql.SQLException;
-
 public class UI {
 
-    public static void main() {
-        try {
-            Database database = new Database();
+    public static void main(String[] args) {
 
-            String function;
-            String fName;
-            String lName;
-            String email;
+        Database database = new Database();
 
-            decider(function, database, fName, lName, email);
+        String columnSelected = "First Name";
+        String function = "select";
+        String fName = "fName";
+        String lName = "lName";
+        String email = "Email";
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        decider(function, database, fName, lName, email, columnSelected);
+
     }
 
     private static void decider(String function, Database database,
-                                String fName, String lName, String email) {
+                                String fName, String lName, String email, String columnSelected) {
 
         while (true) {
             if (function == "clear") {
                 database.clear();
             } else if (function == "select") {
-                database.selectStatement();
+                database.selectStatement(columnSelected);
             } else if (function == "insert") {
                 if(fName != null && lName != null && email != null) {
                     database.insertStatement(fName, lName, email);

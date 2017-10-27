@@ -8,15 +8,11 @@ public class Database {
 
             Database database = new Database();
 
-            String uifName = "''";
-            String uilName = "''";
-            String email = "''";
-
             Connection con = database.getConnection();
-            database.insertStatement(uifName, uilName, email);
+            //database.insertStatement(uifName, uilName, email);
 
             // What sql selected easier for ui
-            StringBuilder selected = database.selectStatement();
+            database.selectStatement();
 
             con.commit();
             con.close();
@@ -32,18 +28,23 @@ public class Database {
         return con;
     }
 
-    public Database() throws SQLException {
+    public Database() {
+        try {
 
-        this.dataSource = new MysqlDataSource();
+            this.dataSource = new MysqlDataSource();
 
-        dataSource.setUser("root");
-        dataSource.setPassword("password");
-        dataSource.setServerName("localhost");
-        dataSource.setPort(3306);
-        dataSource.setDatabaseName("nickdim");
+            dataSource.setUser("root");
+            dataSource.setPassword("password");
+            dataSource.setServerName("localhost");
+            dataSource.setPort(3306);
+            dataSource.setDatabaseName("nickdim");
 
-        this.con = dataSource.getConnection();
-        con.setAutoCommit(false);
+            this.con = dataSource.getConnection();
+            con.setAutoCommit(false);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void insertStatement(String uifName, String uilName, String email) {
@@ -72,11 +73,11 @@ public class Database {
         }
     }
 
-    public StringBuilder selectStatement() {
+    public String selectStatement() {
         try {
 
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM nickdimfans");
+            PreparedStatement select = con.prepareStatement("SELECT * FROM nickdimfans WHERE FirstName = 'Nick'");
+            ResultSet rs = select.executeQuery();
 
             if (con != null) {
                 StringBuilder selectStatement = new StringBuilder();
@@ -92,27 +93,26 @@ public class Database {
                     selectStatement.append("\n");
                     System.out.println(selectStatement);
                 }
-                return selectStatement;
+                return selectStatement.toString();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        StringBuilder error = new StringBuilder();
-        error.append("Error, check java");
-        return error;
+        return "error check selectStatement";
     }
-    public StringBuilder getEmails() {
+    public String getEmails() {
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT Email FROM nickdimfans");
-            StringBuilder sb = new StringBuilder
-            while (rs.next) {
+            StringBuilder sb = new StringBuilder();
+            while (rs.next()) {
                 sb.append(rs.getString("Email"));
             }
-            return sb;
+            return sb.toString();
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }
