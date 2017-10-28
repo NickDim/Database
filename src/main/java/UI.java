@@ -4,24 +4,23 @@ public class UI {
 
         Database database = new Database();
 
-        String columnSelected = "First Name";
         String function = "select";
         String fName = "fName";
         String lName = "lName";
         String email = "Email";
 
-        decider(function, database, fName, lName, email, columnSelected);
+        decider(function, database, fName, lName, email);
 
     }
 
     private static void decider(String function, Database database,
-                                String fName, String lName, String email, String columnSelected) {
+                                String fName, String lName, String email) {
 
         while (true) {
             if (function == "clear") {
                 database.clear();
             } else if (function == "select") {
-                database.selectStatement(columnSelected);
+                database.selectStatement();
             } else if (function == "insert") {
                 if(fName != null && lName != null && email != null) {
                     database.insertStatement(fName, lName, email);

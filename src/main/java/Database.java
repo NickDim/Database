@@ -9,7 +9,12 @@ public class Database {
             Database database = new Database();
 
             Connection con = database.getConnection();
-            //database.insertStatement(uifName, uilName, email);
+
+            String uifName = "FirstName";
+            String uilName = "LastName";
+            String email = "example@gmail.com";
+
+            database.insertStatement(uifName, uilName, email);
 
             // What sql selected easier for ui
             database.selectStatement();
@@ -100,15 +105,17 @@ public class Database {
         }
         return "error check selectStatement";
     }
-    public String getEmails() {
+    public String[] getEmails() {
         try {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT Email FROM nickdimfans");
-            StringBuilder sb = new StringBuilder();
+            String[] emails = new String[10000];
+            int i = 0;
             while (rs.next()) {
-                sb.append(rs.getString("Email"));
+                emails[i] = rs.getString("Email");
+                i++;
             }
-            return sb.toString();
+            return "error check getEmails".split("error");
         }
         catch (SQLException e) {
             e.printStackTrace();
