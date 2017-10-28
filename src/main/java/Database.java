@@ -10,9 +10,11 @@ public class Database {
 
             Connection con = database.getConnection();
 
-            String uifName = "FirstName";
-            String uilName = "LastName";
-            String email = "example@gmail.com";
+            String uifName = "Nick";
+            String uilName = "Dimitrov";
+            String email = "nikolad21889@isd273.org";
+
+            //database.clear();
 
             database.insertStatement(uifName, uilName, email);
 
@@ -57,7 +59,11 @@ public class Database {
 
             PreparedStatement insertStatement = con.prepareStatement("INSERT INTO" +
                     " nickdimfans (FirstName, LastName, Email)\n" +
-                    "VALUES (+ " + uifName + "," + uilName + "," + email + ")");
+                    "VALUES (?,?,?)");
+
+            insertStatement.setString(1, uifName);
+            insertStatement.setString(2, uilName);
+            insertStatement.setString(3, email);
 
             insertStatement.executeUpdate();
 
@@ -81,10 +87,13 @@ public class Database {
     public String selectStatement() {
         try {
 
-            PreparedStatement select = con.prepareStatement("SELECT * FROM nickdimfans WHERE FirstName = 'Nick'");
+            PreparedStatement select = con.prepareStatement("SELECT ? FROM nickdimfans WHERE FirstName = ?");
+
+            select.setString(1, "*");
+            select.setString(2, "'Richik'");
+
             ResultSet rs = select.executeQuery();
 
-            if (con != null) {
                 StringBuilder selectStatement = new StringBuilder();
                 selectStatement.append("ID\tFirst Name\tLast Name\tEmail\n");
                 while (rs.next()) {
@@ -99,7 +108,6 @@ public class Database {
                     System.out.println(selectStatement);
                 }
                 return selectStatement.toString();
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -107,8 +115,8 @@ public class Database {
     }
     public String[] getEmails() {
         try {
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT Email FROM nickdimfans");
+            PreparedStatement stmt = con.prepareStatement("SELECT Email FROM nickdimfans");
+            ResultSet rs = stmt.executeQuery();
             String[] emails = new String[10000];
             int i = 0;
             while (rs.next()) {

@@ -40,10 +40,10 @@ public class MailService {
                 request.setMethod(Method.POST);
                 request.setEndpoint("mail/send");
                 request.setBody(mail.build());
-                sg.api(request);
-
 
             }
+
+            sg.api(request);
 
         }
         catch (IOException e) {
