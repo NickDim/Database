@@ -123,11 +123,11 @@ public class Database {
                 emails[i] = rs.getString("Email");
                 i++;
             }
-            return "error check getEmails".split("error");
+            return emails;
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return "error check getEmails".split("error");
     }
 }
