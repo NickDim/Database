@@ -37,7 +37,7 @@ public class MailService {
 
             for(int i = 0; i < toEmails.size(); i++) {
 
-                Email toEmail = new Email(toEmails.get(1));
+                Email toEmail = new Email(toEmails.get(i));
                 Mail mail = new Mail(from, subject, toEmail, content);
 
                 request.setMethod(Method.POST);
