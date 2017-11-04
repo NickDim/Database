@@ -1,5 +1,6 @@
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class Database {
 
@@ -113,14 +114,14 @@ public class Database {
         }
         return "error check selectStatement";
     }
-    public String[] getEmails() {
+    public ArrayList getEmails() {
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT Email FROM nickdimfans");
             ResultSet rs = stmt.executeQuery();
-            String[] emails = new String[10000];
+            ArrayList<String> emails = new ArrayList(0);
             int i = 0;
             while (rs.next()) {
-                emails[i] = rs.getString("Email");
+                emails.add(rs.getString("Email"));
                 i++;
             }
             return emails;
@@ -128,6 +129,6 @@ public class Database {
         catch (SQLException e) {
             e.printStackTrace();
         }
-        return "error check getEmails".split("error");
+        return null;
     }
 }

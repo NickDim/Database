@@ -9,3 +9,4 @@ out/
 
 # SendGrid API Key
 sendgrid.env
+sendgrid.env
