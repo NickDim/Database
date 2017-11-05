@@ -8,45 +8,51 @@ public class MailService {
     public static void main(String[] args) {
         MailService mail = new MailService();
         Database database = mail.database;
-        ArrayList<String> toEmails = database.getEmails();
 
-        mail.mailer(toEmails);
+        ArrayList<String> toEmails = database.getEmails();
+        ArrayList<String> fNames = database.getfNames();
+        ArrayList<String> lNames = database.getlNames();
+
+        mail.mailer(toEmails, fNames, lNames);
     }
+
     private Database database;
 
     private Email from;
     private String subject;
-    private Content content;
+    private Mail mail;
 
     private SendGrid sg;
     private Request request;
 
     public MailService() {
-        System.out.println(System.getenv("SENDGRID_API_KEY"));
+
         this.from = new Email("nikolad21889@isd273.org");
         this.database = new Database();
-        this.subject = "Hello Email world";
-        this.content = new Content("text/plain", "I can't believe this works");
+        this.subject = "Welcome to my database";
         this.sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
 
         this.request = new Request();
     }
 
-    public void mailer(ArrayList<String> toEmails) {
+    public void mailer(ArrayList<String> toEmails, ArrayList<String> fNames, ArrayList<String> lNames) {
         try {
 
             for(int i = 0; i < toEmails.size(); i++) {
 
-                Email toEmail = new Email(toEmails.get(i));
-                Mail mail = new Mail(from, subject, toEmail, content);
+                Email to = new Email(toEmails.get(i));
+                Content content = new Content("text/plain", "Hello, " + fNames.get(i)
+                    + " " + lNames.get(i) + ", welcome to the NickDim database.");
+
+                this.mail = new Mail(from, subject, to, content);
 
                 request.setMethod(Method.POST);
                 request.setEndpoint("mail/send");
                 request.setBody(mail.build());
 
-            }
+                sg.api(request);
 
-            sg.api(request);
+            }
 
         }
         catch (IOException e) {

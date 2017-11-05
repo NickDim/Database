@@ -49,8 +49,7 @@ public class Database {
 
             this.con = dataSource.getConnection();
             con.setAutoCommit(false);
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -59,8 +58,8 @@ public class Database {
         try {
 
             PreparedStatement insertStatement = con.prepareStatement("INSERT INTO" +
-                    " nickdimfans (FirstName, LastName, Email)\n" +
-                    "VALUES (?,?,?)");
+                " nickdimfans (FirstName, LastName, Email)\n" +
+                "VALUES (?,?,?)");
 
             insertStatement.setString(1, uifName);
             insertStatement.setString(2, uilName);
@@ -79,8 +78,7 @@ public class Database {
             PreparedStatement clear = con.prepareStatement("DELETE FROM nickdimfans");
             clear.executeUpdate();
 
-        }
-        catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -95,38 +93,71 @@ public class Database {
 
             ResultSet rs = select.executeQuery();
 
-                StringBuilder selectStatement = new StringBuilder();
-                selectStatement.append("ID\tFirst Name\tLast Name\tEmail\n");
-                while (rs.next()) {
-                    selectStatement.append(rs.getInt("ID"));
-                    selectStatement.append("\t");
-                    selectStatement.append(rs.getString("FirstName"));
-                    selectStatement.append("\t");
-                    selectStatement.append(rs.getString("LastName"));
-                    selectStatement.append("\t");
-                    selectStatement.append(rs.getString("Email"));
-                    selectStatement.append("\n");
-                    System.out.println(selectStatement);
-                }
-                return selectStatement.toString();
+            StringBuilder selectStatement = new StringBuilder();
+            selectStatement.append("ID\tFirst Name\tLast Name\tEmail\n");
+            while (rs.next()) {
+                selectStatement.append(rs.getInt("ID"));
+                selectStatement.append("\t");
+                selectStatement.append(rs.getString("FirstName"));
+                selectStatement.append("\t");
+                selectStatement.append(rs.getString("LastName"));
+                selectStatement.append("\t");
+                selectStatement.append(rs.getString("Email"));
+                selectStatement.append("\n");
+                System.out.println(selectStatement);
+            }
+            return selectStatement.toString();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return "error check selectStatement";
     }
+
     public ArrayList getEmails() {
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT Email FROM nickdimfans");
             ResultSet rs = stmt.executeQuery();
             ArrayList<String> emails = new ArrayList(0);
-            int i = 0;
+
             while (rs.next()) {
                 emails.add(rs.getString("Email"));
-                i++;
             }
             return emails;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        catch (SQLException e) {
+        return null;
+    }
+
+    public ArrayList getfNames() {
+        try {
+
+            PreparedStatement stmt = con.prepareStatement("SELECT FirstName from nickdimfans");
+            ResultSet rs = stmt.executeQuery();
+
+            ArrayList<String> fNames = new ArrayList<>();
+
+            while (rs.next()) {
+                fNames.add(rs.getString("FirstName"));
+            }
+            return fNames;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public ArrayList getlNames (){
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT LastName from nickdimfans");
+            ResultSet rs = stmt.executeQuery();
+
+            ArrayList<String> lNames = new ArrayList<>();
+
+            while (rs.next()) {
+                lNames.add(rs.getString("LastName"));
+            }
+            return lNames;
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
