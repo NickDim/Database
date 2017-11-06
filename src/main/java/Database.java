@@ -162,4 +162,21 @@ public class Database {
         }
         return null;
     }
+
+    public String getFanCount() {
+        try {
+
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM nickdimfans");
+            ResultSet rs = stmt.executeQuery();
+
+            int i = 0;
+            while(rs.next()) {
+                i++;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

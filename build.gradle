@@ -10,6 +10,7 @@ repositories {
 dependencies {
     compile 'com.sendgrid:sendgrid-java:4.1.1'
     compile 'mysql:mysql-connector-java:5.1.2'
+    compile "com.sparkjava:spark-core:2.7.0"
 }
 
 sourceSets {
