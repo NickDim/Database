@@ -1,21 +1,12 @@
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.*;
 import java.util.ArrayList;
-import static spark.Spark.get;
-
-import spark.Request;
-import spark.Response;
-import spark.Route;
+import spark.Spark;
 
 public class Database {
 
-    public static void spark(){
-        get(new Route("/users/:id") {
-            @Override
-            public Object handle(Request request, Response response) {
-                return  "User: username=test, email=test@test.net";
-            }
-        });
+    public void spark(){
+        Spark.get("/user/:id", (request, response) -> "User: username=test, email=test@test.net");
     }
     public static void main(String args[]) {
         try {
@@ -32,7 +23,7 @@ public class Database {
 
             //database.clear();
 
-            database.insertStatement(uifName, uilName, email);
+            //database.insertStatement(uifName, uilName, email);
 
             // What sql selected easier for ui
             database.selectStatement();
