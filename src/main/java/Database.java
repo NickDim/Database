@@ -110,9 +110,11 @@ public class Database {
                 selectStatement.append("\t");
                 selectStatement.append(rs.getString("Email"));
                 selectStatement.append("\n");
-                System.out.println(selectStatement);
             }
+            System.out.println(selectStatement);
+
             return selectStatement.toString();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -179,6 +181,7 @@ public class Database {
             while(rs.next()) {
                 i++;
             }
+            return "" + i;
         }
         catch (SQLException e) {
             e.printStackTrace();

@@ -42,7 +42,8 @@ public class MailService {
 
                 Email to = new Email(toEmails.get(i));
                 Content content = new Content("text/plain", "Hello, " + fNames.get(i)
-                    + " " + lNames.get(i) + ", welcome to the NickDim database.");
+                    + " " + lNames.get(i) + ", welcome to the NickDim database. You are " +
+                    "currently one of " + database.getFanCount() + " database members.");
 
                 this.mail = new Mail(from, subject, to, content);
 
