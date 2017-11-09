@@ -1,9 +1,13 @@
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import spark.Spark;
 
 public class Database {
 
+    public void spark(){
+        Spark.get("/user/:id", (request, response) -> "User: username=test, email=test@test.net");
+    }
     public static void main(String args[]) {
         try {
 
@@ -15,9 +19,11 @@ public class Database {
             String uilName = "Dimitrov";
             String email = "nikolad21889@isd273.org";
 
+            database.spark();
+
             //database.clear();
 
-            database.insertStatement(uifName, uilName, email);
+            //database.insertStatement(uifName, uilName, email);
 
             // What sql selected easier for ui
             database.selectStatement();
