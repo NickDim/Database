@@ -5,9 +5,6 @@ import spark.Spark;
 
 public class Database {
 
-    public void spark(){
-        Spark.get("/user/:id", (request, response) -> "User: username=test, email=test@test.net");
-    }
     public static void main(String args[]) {
         try {
 
@@ -26,17 +23,23 @@ public class Database {
             //database.insertStatement(uifName, uilName, email);
 
             // What sql selected easier for ui
-            database.selectStatement();
+            //database.selectStatement();
 
             con.commit();
             con.close();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private MysqlDataSource dataSource;
     private Connection con;
+
+    public void spark() {
+        Spark.get("/user/:id", (request, response) -> "User: " +
+            getFirstNames().get(1) + " " + getLastNames().get(1) + " " + "email: "
+            + getEmails().get(1));
+    }
 
     Connection getConnection() {
         return con;
@@ -55,7 +58,7 @@ public class Database {
 
             this.con = dataSource.getConnection();
             con.setAutoCommit(false);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -73,7 +76,7 @@ public class Database {
 
             insertStatement.executeUpdate();
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -84,7 +87,7 @@ public class Database {
             PreparedStatement clear = con.prepareStatement("DELETE FROM nickdimfans");
             clear.executeUpdate();
 
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -95,7 +98,7 @@ public class Database {
             PreparedStatement select = con.prepareStatement("SELECT ? FROM nickdimfans WHERE FirstName = ?");
 
             select.setString(1, "*");
-            select.setString(2, "'Richik'");
+            select.setString(2, "'Nick'");
 
             ResultSet rs = select.executeQuery();
 
@@ -121,6 +124,36 @@ public class Database {
         return "error check selectStatement";
     }
 
+    public ArrayList getFirstNames() {
+        try {
+            PreparedStatement stmt = con.prepareStatement("Select FirstName from nickdimfans");
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<String> FirstNames = new ArrayList<>();
+            while (rs.next()) {
+                FirstNames.add(rs.getString("FirstName"));
+            }
+            return FirstNames;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList getLastNames() {
+        try {
+            PreparedStatement stmt = con.prepareStatement("Select FirstName from nickdimfans");
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<String> LastNames = new ArrayList<>();
+            while (rs.next()) {
+                LastNames.add(rs.getString("LirstName"));
+            }
+            return LastNames;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public ArrayList getEmails() {
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT Email FROM nickdimfans");
@@ -131,7 +164,7 @@ public class Database {
                 emails.add(rs.getString("Email"));
             }
             return emails;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -149,7 +182,7 @@ public class Database {
                 fNames.add(rs.getString("FirstName"));
             }
             return fNames;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -165,7 +198,7 @@ public class Database {
                 lNames.add(rs.getString("LastName"));
             }
             return lNames;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -183,7 +216,7 @@ public class Database {
             }
             return "" + i;
         }
-        catch (SQLException e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
         return null;
