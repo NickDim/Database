@@ -16,7 +16,11 @@ public class Database {
             String uilName = "Dimitrov";
             String email = "nikolad21889@isd273.org";
 
-            database.spark();
+            String firstFName = database.getfNames().get(1).toString();
+            String firstLName = database.getlNames().get(1).toString();
+            String firstEmail = database.getEmails().get(1).toString();
+
+            database.spark(firstFName, firstLName, firstEmail);
 
             //database.clear();
 
@@ -35,10 +39,10 @@ public class Database {
     private MysqlDataSource dataSource;
     private Connection con;
 
-    public void spark() {
-        Spark.get("/user/:id", (request, response) -> "User: " +
-            getfNames().get(1) + " " + getlNames().get(1) + " " + "email: "
-            + getEmails().get(1));
+    public void spark(String fName, String lName, String email) {
+            Spark.get("/user/:id", (request, response) -> "User: " +
+                fName + " " + lName + " " + "email: "
+                + email);
     }
 
     Connection getConnection() {
@@ -58,6 +62,7 @@ public class Database {
 
             this.con = dataSource.getConnection();
             con.setAutoCommit(false);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
