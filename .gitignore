@@ -1,5 +1,6 @@
 # User-specific stuff:
 .idea/
+build/
 
 ## File-based project format:
 *.iws
@@ -8,5 +9,4 @@
 out/
 
 # SendGrid API Key
-sendgrid.env
 sendgrid.env

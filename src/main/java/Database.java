@@ -23,7 +23,7 @@ public class Database {
             //database.insertStatement(uifName, uilName, email);
 
             // What sql selected easier for ui
-            //database.selectStatement();
+            database.selectStatement();
 
             con.commit();
             con.close();
@@ -37,7 +37,7 @@ public class Database {
 
     public void spark() {
         Spark.get("/user/:id", (request, response) -> "User: " +
-            getFirstNames().get(1) + " " + getLastNames().get(1) + " " + "email: "
+            getfNames().get(1) + " " + getlNames().get(1) + " " + "email: "
             + getEmails().get(1));
     }
 
@@ -95,10 +95,7 @@ public class Database {
     public String selectStatement() {
         try {
 
-            PreparedStatement select = con.prepareStatement("SELECT ? FROM nickdimfans WHERE FirstName = ?");
-
-            select.setString(1, "*");
-            select.setString(2, "'Nick'");
+            PreparedStatement select = con.prepareStatement("SELECT * FROM nickdimfans");
 
             ResultSet rs = select.executeQuery();
 
@@ -106,15 +103,14 @@ public class Database {
             selectStatement.append("ID\tFirst Name\tLast Name\tEmail\n");
             while (rs.next()) {
                 selectStatement.append(rs.getInt("ID"));
-                selectStatement.append("\t");
+                selectStatement.append("\t\t");
                 selectStatement.append(rs.getString("FirstName"));
-                selectStatement.append("\t");
+                selectStatement.append("\t\t");
                 selectStatement.append(rs.getString("LastName"));
-                selectStatement.append("\t");
+                selectStatement.append("\t\t");
                 selectStatement.append(rs.getString("Email"));
                 selectStatement.append("\n");
             }
-            System.out.println(selectStatement);
 
             return selectStatement.toString();
 
@@ -122,36 +118,6 @@ public class Database {
             e.printStackTrace();
         }
         return "error check selectStatement";
-    }
-
-    public ArrayList getFirstNames() {
-        try {
-            PreparedStatement stmt = con.prepareStatement("Select FirstName from nickdimfans");
-            ResultSet rs = stmt.executeQuery();
-            ArrayList<String> FirstNames = new ArrayList<>();
-            while (rs.next()) {
-                FirstNames.add(rs.getString("FirstName"));
-            }
-            return FirstNames;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public ArrayList getLastNames() {
-        try {
-            PreparedStatement stmt = con.prepareStatement("Select FirstName from nickdimfans");
-            ResultSet rs = stmt.executeQuery();
-            ArrayList<String> LastNames = new ArrayList<>();
-            while (rs.next()) {
-                LastNames.add(rs.getString("LirstName"));
-            }
-            return LastNames;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public ArrayList getEmails() {
