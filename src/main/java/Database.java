@@ -1,7 +1,6 @@
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.*;
 import java.util.ArrayList;
-import spark.Spark;
 
 public class Database {
 
@@ -16,18 +15,9 @@ public class Database {
             String uilName = "Dimitrov";
             String email = "nikolad21889@isd273.org";
 
-            String firstFName = database.getfNames().get(1).toString();
-            String firstLName = database.getlNames().get(1).toString();
-            String firstEmail = database.getEmails().get(1).toString();
-
-            database.spark(firstFName, firstLName, firstEmail);
-
-            //database.clear();
-
-            //database.insertStatement(uifName, uilName, email);
-
-            // What sql selected easier for ui
-            database.selectStatement();
+//            String firstFName = database.getfNames().get(0).toString();
+//            String firstLName = database.getlNames().get(0).toString();
+//            String firstEmail = database.getEmails().get(0).toString();
 
             con.commit();
             con.close();
@@ -38,12 +28,6 @@ public class Database {
 
     private MysqlDataSource dataSource;
     private Connection con;
-
-    public void spark(String fName, String lName, String email) {
-            Spark.get("/user/:id", (request, response) -> "User: " +
-                fName + " " + lName + " " + "email: "
-                + email);
-    }
 
     Connection getConnection() {
         return con;
@@ -97,32 +81,24 @@ public class Database {
         }
     }
 
-    public String selectStatement() {
+    public User getUser(int PK) {
         try {
-
-            PreparedStatement select = con.prepareStatement("SELECT * FROM nickdimfans");
-
-            ResultSet rs = select.executeQuery();
-
-            StringBuilder selectStatement = new StringBuilder();
-            selectStatement.append("ID\tFirst Name\tLast Name\tEmail\n");
-            while (rs.next()) {
-                selectStatement.append(rs.getInt("ID"));
-                selectStatement.append("\t\t");
-                selectStatement.append(rs.getString("FirstName"));
-                selectStatement.append("\t\t");
-                selectStatement.append(rs.getString("LastName"));
-                selectStatement.append("\t\t");
-                selectStatement.append(rs.getString("Email"));
-                selectStatement.append("\n");
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM nickdimfans WHERE ID = ?");
+            stmt.setInt(1, PK);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new User(
+                    rs.getInt("ID"),
+                    rs.getString("FirstName"),
+                    rs.getString("LastName"),
+                    rs.getString("Email")
+                );
             }
-
-            return selectStatement.toString();
-
-        } catch (SQLException e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
-        return "error check selectStatement";
+        return null;
     }
 
     public ArrayList getEmails() {
