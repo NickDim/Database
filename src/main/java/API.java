@@ -6,7 +6,7 @@ public class API {
   public static void main(String[] args) {
 
     API api = new API();
-    api.spark();
+    api.startServer();
 
   }
 
@@ -20,7 +20,7 @@ public class API {
 
   }
 
-  public void spark() {
+  public void startServer() {
     Spark.get("/user/:id", (request, response) -> {
       response.type("application/json");
       return getJSON(database.getUser(
