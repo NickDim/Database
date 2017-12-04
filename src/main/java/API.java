@@ -1,6 +1,5 @@
 import com.google.gson.Gson;
 import spark.Spark;
-
 import java.sql.SQLException;
 
 public class API {
