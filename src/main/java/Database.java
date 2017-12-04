@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Database {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         try {
 
             Database database = new Database();
