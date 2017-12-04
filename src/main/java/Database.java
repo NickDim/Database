@@ -15,10 +15,6 @@ public class Database {
             String uilName = "Dimitrov";
             String email = "nikolad21889@isd273.org";
 
-//            String firstFName = database.getfNames().get(0).toString();
-//            String firstLName = database.getlNames().get(0).toString();
-//            String firstEmail = database.getEmails().get(0).toString();
-
             con.commit();
             con.close();
         } catch (Exception e) {
@@ -101,7 +97,28 @@ public class Database {
         return null;
     }
 
-    public ArrayList getEmails() {
+    public User[] getUsers() {
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM nickdimfans");
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<User> users = new ArrayList<>();
+            while (rs.next()) {
+                users.add(new User(
+                    rs.getInt("ID"),
+                    rs.getString("FirstName"),
+                    rs.getString("LastName"),
+                    rs.getString("Email")
+                ));
+            }
+            return users.toArray(new User[users.size()]);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String[] getEmails() {
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT Email FROM nickdimfans");
             ResultSet rs = stmt.executeQuery();
@@ -110,14 +127,14 @@ public class Database {
             while (rs.next()) {
                 emails.add(rs.getString("Email"));
             }
-            return emails;
+            return emails.toArray(new String[emails.size()]);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public ArrayList getfNames() {
+    public String[] getfNames() {
         try {
 
             PreparedStatement stmt = con.prepareStatement("SELECT FirstName from nickdimfans");
@@ -128,13 +145,13 @@ public class Database {
             while (rs.next()) {
                 fNames.add(rs.getString("FirstName"));
             }
-            return fNames;
+            return fNames.toArray(new String[fNames.size()]);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-    public ArrayList getlNames (){
+    public String[] getlNames (){
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT LastName from nickdimfans");
             ResultSet rs = stmt.executeQuery();
@@ -144,7 +161,7 @@ public class Database {
             while (rs.next()) {
                 lNames.add(rs.getString("LastName"));
             }
-            return lNames;
+            return lNames.toArray(new String[lNames.size()]);
         } catch (Exception e) {
             e.printStackTrace();
         }
