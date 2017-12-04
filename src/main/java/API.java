@@ -1,6 +1,8 @@
 import com.google.gson.Gson;
 import spark.Spark;
 
+import java.sql.SQLException;
+
 public class API {
 
   public static void main(String[] args) {
@@ -8,6 +10,14 @@ public class API {
     API api = new API();
     api.spark();
 
+    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+      try {
+        api.getDatabase().getConnection().close();
+      } catch (SQLException e) {
+        e.printStackTrace();
+        System.exit(1);
+      }
+    }));
   }
 
   private Gson gson;
@@ -31,5 +41,9 @@ public class API {
 
   private String getJSON(User user) {
     return gson.toJson(user);
+  }
+
+  public Database getDatabase() {
+    return database;
   }
 }
