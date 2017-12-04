@@ -1,6 +1,9 @@
 # User-specific stuff:
 .idea/
+
+# Gradle
 build/
+.gradle/
 
 ## File-based project format:
 *.iws
@@ -10,3 +13,6 @@ out/
 
 # SendGrid API Key
 sendgrid.env
+
+# When Bash on Windows fails
+bash.exe.stackdump
