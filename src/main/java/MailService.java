@@ -33,7 +33,7 @@ public class MailService {
         this.request = new Request();
     }
 
-    public void mailer(String[] toEmails, String[] fNames, String[] lNames) {
+    public void mailer(String[] toEmails, String[] fNames, String[] lNames, int PK[]) {
         try {
 
             for(int i = 0; i < toEmails.length; i++) {

@@ -44,7 +44,6 @@ public class API {
   }
 
   private String getJSONs(User[] users) {
-    users.toString();
     return gson.toJson(users);
   }
 
