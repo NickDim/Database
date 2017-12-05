@@ -58,4 +58,29 @@ public class MailService {
             e.printStackTrace();
         }
     }
+
+    public void mailer(User[] users) {
+        try {
+            for (User user : users) {
+                Email to = new Email(user.getEmail());
+
+                Content content = new Content("text/plain",
+                    String.format("Hello %s %s,\n Welcome to the " +
+                            "NickDim database. You are currently one of %s members.",
+                        user.getfName(), user.getlName(), database.getFanCount()
+                    )
+                );
+
+                this.mail = new Mail(from, subject, to, content);
+
+                request.setMethod(Method.POST);
+                request.setEndpoint("mail/send");
+                request.setBody(mail.build());
+
+                sg.api(request);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
