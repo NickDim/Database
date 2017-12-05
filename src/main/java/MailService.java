@@ -7,15 +7,11 @@ public class MailService {
         MailService mail = new MailService();
         Database database = mail.database;
 
-        String[] toEmails = database.getEmails();
-        String[] fNames = database.getfNames();
-        String[] lNames = database.getlNames();
-
-        mail.mailer();
+        mail.mailer(mail.users);
     }
 
     private Database database;
-    private User user;
+    private User[] users;
 
     private Email from;
     private String subject;
@@ -27,6 +23,7 @@ public class MailService {
     public MailService() {
 
         this.database = new Database();
+        this.users = database.getUsers();
 
         this.from = new Email("nikolad21889@isd273.org");
         this.subject = "Welcome to my database";
