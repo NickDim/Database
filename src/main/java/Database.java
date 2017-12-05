@@ -1,6 +1,9 @@
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+
+import java.io.FileInputStream;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class Database {
 
@@ -32,13 +35,16 @@ public class Database {
     public Database() {
         try {
 
+            Properties dbProperties = new Properties();
+            dbProperties.load(new FileInputStream("db.properties"));
+
             this.dataSource = new MysqlDataSource();
 
-            dataSource.setUser("root");
-            dataSource.setPassword("password");
+            dataSource.setUser(dbProperties.getProperty("user"));
+            dataSource.setPassword(dbProperties.getProperty("password"));
             dataSource.setServerName("localhost");
             dataSource.setPort(3306);
-            dataSource.setDatabaseName("nickdim");
+            dataSource.setDatabaseName(dbProperties.getProperty("schema"));
 
             this.con = dataSource.getConnection();
             con.setAutoCommit(false);

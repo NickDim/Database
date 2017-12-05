@@ -16,3 +16,6 @@ sendgrid.env
 
 # When Bash on Windows fails
 bash.exe.stackdump
+
+# User-specific and sensitive database information
+db.properties

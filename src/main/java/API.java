@@ -23,16 +23,19 @@ public class API {
   private Database database;
 
   public API() {
-
     this.gson = new Gson();
     this.database = new Database();
-
   }
 
   public void startServer() {
-    Spark.get("/user/:id", (request, response) -> {
+    Spark.get("/users", (request, response) -> {
       response.type("application/json");
       return getJSONs(database.getUsers());
+    });
+
+    Spark.get("/users/:id", (request, response) -> {
+      response.type("application/json");
+      return getJSON(database.getUser(Integer.parseInt(request.params("id"))));
     });
   }
 
@@ -41,10 +44,8 @@ public class API {
   }
 
   private String getJSONs(User[] users) {
-
     users.toString();
     return gson.toJson(users);
-
   }
 
   public Database getDatabase() {
