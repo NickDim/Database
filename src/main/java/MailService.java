@@ -35,36 +35,6 @@ public class MailService {
         this.request = new Request();
     }
 
-    public void mailer() {
-        try {
-
-            String[] toEmails = database.getEmails();
-            for(int i = 0; i < toEmails.length; i++) {
-
-                user = database.getUser(i);
-
-                Email to = new Email(user.getEmail());
-                Content content = new Content("text/plain", "Hello, " + user.getfName()
-                    + " " + user.getlName() + ", welcome to the NickDim database. You are " +
-                    "currently one of " + database.getFanCount() + " database members. Your ID number is "
-                    + user.getPK());
-
-                this.mail = new Mail(from, subject, to, content);
-
-                request.setMethod(Method.POST);
-                request.setEndpoint("mail/send");
-                request.setBody(mail.build());
-
-                sg.api(request);
-
-            }
-
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void mailer(User[] users) {
         try {
             for (User user : users) {
