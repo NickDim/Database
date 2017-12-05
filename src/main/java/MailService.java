@@ -11,10 +11,11 @@ public class MailService {
         String[] fNames = database.getfNames();
         String[] lNames = database.getlNames();
 
-        mail.mailer(toEmails, fNames, lNames);
+        mail.mailer();
     }
 
     private Database database;
+    private User user;
 
     private Email from;
     private String subject;
@@ -25,23 +26,28 @@ public class MailService {
 
     public MailService() {
 
-        this.from = new Email("nikolad21889@isd273.org");
         this.database = new Database();
+
+        this.from = new Email("nikolad21889@isd273.org");
         this.subject = "Welcome to my database";
         this.sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
 
         this.request = new Request();
     }
 
-    public void mailer(String[] toEmails, String[] fNames, String[] lNames, int PK[]) {
+    public void mailer() {
         try {
 
+            String[] toEmails = database.getEmails();
             for(int i = 0; i < toEmails.length; i++) {
 
-                Email to = new Email(toEmails[i]);
-                Content content = new Content("text/plain", "Hello, " + fNames[i]
-                    + " " + lNames[i] + ", welcome to the NickDim database. You are " +
-                    "currently one of " + database.getFanCount() + " database members.");
+                user = database.getUser(i);
+
+                Email to = new Email(user.getEmail());
+                Content content = new Content("text/plain", "Hello, " + user.getfName()
+                    + " " + user.getlName() + ", welcome to the NickDim database. You are " +
+                    "currently one of " + database.getFanCount() + " database members. Your ID number is "
+                    + user.getPK());
 
                 this.mail = new Mail(from, subject, to, content);
 
