@@ -1,7 +1,5 @@
 import com.sendgrid.*;
-
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class MailService {
 
@@ -9,9 +7,9 @@ public class MailService {
         MailService mail = new MailService();
         Database database = mail.database;
 
-        ArrayList<String> toEmails = database.getEmails();
-        ArrayList<String> fNames = database.getfNames();
-        ArrayList<String> lNames = database.getlNames();
+        String[] toEmails = database.getEmails();
+        String[] fNames = database.getfNames();
+        String[] lNames = database.getlNames();
 
         mail.mailer(toEmails, fNames, lNames);
     }
@@ -35,14 +33,14 @@ public class MailService {
         this.request = new Request();
     }
 
-    public void mailer(ArrayList<String> toEmails, ArrayList<String> fNames, ArrayList<String> lNames) {
+    public void mailer(String[] toEmails, String[] fNames, String[] lNames) {
         try {
 
-            for(int i = 0; i < toEmails.size(); i++) {
+            for(int i = 0; i < toEmails.length; i++) {
 
-                Email to = new Email(toEmails.get(i));
-                Content content = new Content("text/plain", "Hello, " + fNames.get(i)
-                    + " " + lNames.get(i) + ", welcome to the NickDim database. You are " +
+                Email to = new Email(toEmails[i]);
+                Content content = new Content("text/plain", "Hello, " + fNames[i]
+                    + " " + lNames[i] + ", welcome to the NickDim database. You are " +
                     "currently one of " + database.getFanCount() + " database members.");
 
                 this.mail = new Mail(from, subject, to, content);

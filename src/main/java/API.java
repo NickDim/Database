@@ -32,14 +32,19 @@ public class API {
   public void startServer() {
     Spark.get("/user/:id", (request, response) -> {
       response.type("application/json");
-      return getJSON(database.getUser(
-          Integer.parseInt(request.params(":id"))
-      ));
+      return getJSONs(database.getUsers());
     });
   }
 
   private String getJSON(User user) {
     return gson.toJson(user);
+  }
+
+  private String getJSONs(User[] users) {
+
+    users.toString();
+    return gson.toJson(users);
+
   }
 
   public Database getDatabase() {
