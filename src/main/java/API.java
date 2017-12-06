@@ -27,7 +27,7 @@ public class API {
     this.database = new Database();
   }
 
-  public void startServer() {
+  private void startServer() {
     Spark.get("/users", (request, response) -> {
       response.type("application/json");
       return getJSONs(database.getUsers());
