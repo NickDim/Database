@@ -104,22 +104,7 @@ public class Database {
     }
 
     public PublicUser getPublicUser(int PK) {
-        try {
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM nickdimfans WHERE ID = ?");
-            stmt.setInt(1, PK);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                return new PublicUser(
-                    rs.getInt("ID"),
-                    rs.getString("FirstName"),
-                    rs.getString("LastName")
-                );
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return new PublicUser(getUser(PK));
     }
 
     public User[] getUsers() {
@@ -144,23 +129,12 @@ public class Database {
     }
 
     public PublicUser[] getPublicUsers() {
-        try {
-            PreparedStatement stmt = con.prepareStatement("SELECT * FROM nickdimfans");
-            ResultSet rs = stmt.executeQuery();
-            ArrayList<PublicUser> users = new ArrayList<>();
-            while (rs.next()) {
-                users.add(new PublicUser(
-                    rs.getInt("ID"),
-                    rs.getString("FirstName"),
-                    rs.getString("LastName")
-                ));
-            }
-            return users.toArray(new PublicUser[users.size()]);
+        User[] users = getUsers();
+        PublicUser[] publicUsers = new PublicUser[users.length];
+        for (int i = 0; i < users.length; i++) {
+            publicUsers[i] = new PublicUser(users[i]);
         }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+        return publicUsers;
     }
 
     public String[] getEmails() {
