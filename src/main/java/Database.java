@@ -54,11 +54,11 @@ public class Database {
         }
     }
 
-    public void insertStatement(String uifName, String uilName, String email) {
+    public void addUser(String uifName, String uilName, String email) {
         try {
 
             PreparedStatement insertStatement = con.prepareStatement("INSERT INTO" +
-                " nickdimfans (FirstName, LastName, Email)\n" +
+                " nickdimfans (FirstName, LastName, Email) " +
                 "VALUES (?,?,?)");
 
             insertStatement.setString(1, uifName);
@@ -157,7 +157,7 @@ public class Database {
         }
         return null;
     }
-    public String[] getlNames (){
+    public String[] getlNames() {
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT LastName from nickdimfans");
             ResultSet rs = stmt.executeQuery();

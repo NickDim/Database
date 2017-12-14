@@ -37,6 +37,16 @@ public class API {
       response.type("application/json");
       return getJSON(database.getUser(Integer.parseInt(request.params("id"))));
     });
+
+    Spark.post("/users", (request, response) -> {
+      response.type("application/json");
+      database.addUser(
+          request.queryParams("fName"),
+          request.queryParams("lName"),
+          request.queryParams("email")
+      );
+      return null;
+    });
   }
 
   private String getJSON(User user) {
