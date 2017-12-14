@@ -30,12 +30,12 @@ public class API {
   private void startServer() {
     Spark.get("/users", (request, response) -> {
       response.type("application/json");
-      return getJSONs(database.getUsers());
+      return getJSONs(database.getPublicUsers());
     });
 
     Spark.get("/users/:id", (request, response) -> {
       response.type("application/json");
-      return getJSON(database.getUser(Integer.parseInt(request.params("id"))));
+      return getJSON(database.getPublicUser(Integer.parseInt(request.params("id"))));
     });
 
     Spark.post("/users", (request, response) -> {
@@ -49,11 +49,11 @@ public class API {
     });
   }
 
-  private String getJSON(User user) {
+  private String getJSON(PublicUser user) {
     return gson.toJson(user);
   }
 
-  private String getJSONs(User[] users) {
+  private String getJSONs(PublicUser[] users) {
     return gson.toJson(users);
   }
 

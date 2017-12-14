@@ -1,31 +1,29 @@
-public class User {
+public class PublicUser {
 
   private int PK;
   private String fName;
   private String lName;
-  private String email;
 
-  public User(int PK, String fName, String lName, String email) {
+  public PublicUser(int PK, String fName, String lName) {
     this.PK = PK;
     this.fName = fName;
     this.lName = lName;
-    this.email = email;
   }
 
   public int getPK() {
     return PK;
   }
 
-  public String getfName() {
+  public String gefName() {
     return fName;
-  }
-
-  public String getEmail() {
-    return email;
   }
 
   public String getlName() {
     return lName;
+  }
+
+  public void setPK(int PK) {
+    this.PK = PK;
   }
 
   public void setfName(String fName) {
@@ -34,9 +32,5 @@ public class User {
 
   public void setlName(String lName) {
     this.lName = lName;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
   }
 }

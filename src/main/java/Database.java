@@ -103,6 +103,25 @@ public class Database {
         return null;
     }
 
+    public PublicUser getPublicUser(int PK) {
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM nickdimfans WHERE ID = ?");
+            stmt.setInt(1, PK);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new PublicUser(
+                    rs.getInt("ID"),
+                    rs.getString("FirstName"),
+                    rs.getString("LastName")
+                );
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public User[] getUsers() {
         try {
             PreparedStatement stmt = con.prepareStatement("SELECT * FROM nickdimfans");
@@ -117,6 +136,26 @@ public class Database {
                 ));
             }
             return users.toArray(new User[users.size()]);
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public PublicUser[] getPublicUsers() {
+        try {
+            PreparedStatement stmt = con.prepareStatement("SELECT * FROM nickdimfans");
+            ResultSet rs = stmt.executeQuery();
+            ArrayList<PublicUser> users = new ArrayList<>();
+            while (rs.next()) {
+                users.add(new PublicUser(
+                    rs.getInt("ID"),
+                    rs.getString("FirstName"),
+                    rs.getString("LastName")
+                ));
+            }
+            return users.toArray(new PublicUser[users.size()]);
         }
         catch(Exception e) {
             e.printStackTrace();
