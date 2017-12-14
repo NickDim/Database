@@ -4,10 +4,10 @@ public class PublicUser {
   private String fName;
   private String lName;
 
-  public PublicUser(int PK, String fName, String lName) {
-    this.PK = PK;
-    this.fName = fName;
-    this.lName = lName;
+  public PublicUser(User user) {
+    this.PK = user.getPK();
+    this.fName = user.getfName();
+    this.lName = user.getlName();
   }
 
   public int getPK() {
