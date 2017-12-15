@@ -1,3 +1,5 @@
+package me.nickdim.intdatabase;
+
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import java.io.FileInputStream;
