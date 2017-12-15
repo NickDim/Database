@@ -8,7 +8,6 @@ public class API {
 
       API api = new API();
       api.startServer();
-      api.getDatabase().commit();
 
       Runtime.getRuntime().addShutdownHook(new Thread(() -> {
           api.getDatabase().close();
@@ -46,6 +45,7 @@ public class API {
           request.queryParams("lName"),
           request.queryParams("email")
       );
+      database.commit();
       return null;
     });
   }
