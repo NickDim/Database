@@ -1,3 +1,5 @@
+package me.nickdim.intdatabase;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import spark.Spark;
