@@ -1,3 +1,5 @@
+package me.nickdim.intdatabase;
+
 public class PublicUser {
 
   private int PK;

@@ -1,3 +1,5 @@
+package me.nickdim.intdatabase;
+
 import com.sendgrid.*;
 import java.io.IOException;
 
