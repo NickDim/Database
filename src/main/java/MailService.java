@@ -26,7 +26,7 @@ public class MailService {
         this.users = database.getUsers();
 
         this.from = new Email("nikolad21889@isd273.org");
-        this.subject = "Welcome to my database";
+        this.subject = "Welcome To My Database";
         this.sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
 
         this.request = new Request();
@@ -39,8 +39,8 @@ public class MailService {
 
                 Content content = new Content("text/plain",
                     String.format("Hello %s %s,\n Welcome to the " +
-                            "NickDim database. You are currently one of %s members.",
-                        user.getfName(), user.getlName(), database.getFanCount()
+                            "NickDim database. You are currently #%s of %s members.",
+                        user.getfName(), user.getlName(), user.getPK(), database.getFanCount()
                     )
                 );
 
