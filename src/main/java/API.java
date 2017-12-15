@@ -1,4 +1,5 @@
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import spark.Spark;
 
 public class API {
@@ -46,7 +47,9 @@ public class API {
           request.queryParams("email")
       );
       database.commit();
-      return null;
+      JsonObject returnMsg = new JsonObject();
+      returnMsg.addProperty("added", true);
+      return returnMsg;
     });
   }
 
