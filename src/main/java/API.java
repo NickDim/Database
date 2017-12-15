@@ -41,14 +41,18 @@ public class API {
 
     Spark.post("/users", (request, response) -> {
       response.type("application/json");
-      database.addUser(
-          request.queryParams("fName"),
-          request.queryParams("lName"),
-          request.queryParams("email")
-      );
-      database.commit();
       JsonObject returnMsg = new JsonObject();
-      returnMsg.addProperty("added", true);
+      try {
+        database.addUser(
+            request.queryParams("fName"),
+            request.queryParams("lName"),
+            request.queryParams("email")
+        );
+        database.commit();
+        returnMsg.addProperty("added", true);
+      } catch (Exception e) {
+        returnMsg.addProperty("added", false);
+      }
       return returnMsg;
     });
   }

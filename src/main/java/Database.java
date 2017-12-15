@@ -72,7 +72,7 @@ public class Database {
         }
     }
 
-    public void addUser(String uifName, String uilName, String email) {
+    public void addUser(String uifName, String uilName, String email) throws SQLException {
         try {
 
             PreparedStatement insertStatement = con.prepareStatement("INSERT INTO" +
@@ -87,6 +87,7 @@ public class Database {
 
         } catch (Exception e) {
             e.printStackTrace();
+            throw e;
         }
     }
 
