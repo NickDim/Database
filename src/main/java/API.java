@@ -51,6 +51,7 @@ public class API {
         database.commit();
         returnMsg.addProperty("added", true);
       } catch (Exception e) {
+        response.status(500);
         returnMsg.addProperty("added", false);
       }
       return returnMsg;
