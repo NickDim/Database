@@ -54,6 +54,24 @@ public class Database {
         }
     }
 
+    public void commit() {
+        try {
+            con.commit();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void close() {
+        try {
+            con.commit();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addUser(String uifName, String uilName, String email) {
         try {
 

@@ -1,22 +1,22 @@
 import com.google.gson.Gson;
 import spark.Spark;
-import java.sql.SQLException;
 
 public class API {
 
   public static void main(String[] args) {
+    try {
 
-    API api = new API();
-    api.startServer();
+      API api = new API();
+      api.startServer();
 
-    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-      try {
-        api.getDatabase().getConnection().close();
-      } catch (SQLException e) {
-        e.printStackTrace();
-        System.exit(1);
-      }
-    }));
+      Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+          api.getDatabase().close();
+          System.exit(1);
+      }));
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   private Gson gson;
@@ -45,6 +45,7 @@ public class API {
           request.queryParams("lName"),
           request.queryParams("email")
       );
+      database.commit();
       return null;
     });
   }
