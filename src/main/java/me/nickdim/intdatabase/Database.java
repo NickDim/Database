@@ -74,7 +74,7 @@ public class Database {
         }
     }
 
-    public String addUser(
+    public int addUser(
         String uifName, String uilName, String email)
         throws SQLException {
         try {
@@ -93,14 +93,17 @@ public class Database {
                 "SELECT ID from nickdimfans WHERE email = ?");
 
             selectPK.setString(1, email);
-            ResultSet rs = insertStatement.executeQuery();
+            ResultSet rs = selectPK.executeQuery();
 
-            return rs.toString();
+            if(rs.next()) {
+                return rs.getInt("ID");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
             throw e;
         }
+        return 0;
     }
 
     public void clear() {

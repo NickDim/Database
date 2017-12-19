@@ -13,8 +13,8 @@ public class API {
       api.startServer();
 
       Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-          api.getDatabase().close();
-          System.exit(1);
+        api.getDatabase().close();
+        System.exit(1);
       }));
     }
     catch (Exception e) {
@@ -50,15 +50,14 @@ public class API {
       response.type("application/json");
       JsonObject returnMsg = new JsonObject();
       try {
-        User user = new User(
-            Integer.parseInt(database.addUser(
-                request.queryParams("fName"),
-                request.queryParams("lName"),
-                request.queryParams("email")
-            )),
+        User user = new User(database.addUser(
             request.queryParams("fName"),
-            request.queryParams("lName").toString(),
-            request.queryParams("email").toString());
+            request.queryParams("lName"),
+            request.queryParams("email")
+        ),
+            request.queryParams("fName"),
+            request.queryParams("lName"),
+            request.queryParams("email"));
 
 
         database.commit();
@@ -69,6 +68,7 @@ public class API {
       } catch (Exception e) {
         response.status(500);
         returnMsg.addProperty("added", false);
+        returnMsg.addProperty("\nexception", e.toString());
       }
       return returnMsg;
     });
