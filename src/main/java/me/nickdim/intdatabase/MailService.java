@@ -1,7 +1,10 @@
 package me.nickdim.intdatabase;
 
 import com.sendgrid.*;
+
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Properties;
 
 public class MailService {
 
@@ -16,37 +19,43 @@ public class MailService {
     private User[] users;
 
     private Email from;
-    private String subject;
-    private Mail mail;
 
     private SendGrid sg;
     private Request request;
 
     public MailService() {
+        try {
 
-        this.database = new Database();
-        this.users = database.getUsers();
+            Properties sgProperties = new Properties();
+            sgProperties.load(new FileInputStream("sendgrid.properties"));
 
-        this.from = new Email("nikolad21889@isd273.org");
-        this.subject = "Welcome To My Database";
-        this.sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
+            this.database = new Database();
+            this.users = database.getUsers();
 
-        this.request = new Request();
+            this.from = new Email(sgProperties.getProperty("email"));
+            this.sg = new SendGrid(System.getenv("SENDGRID_API_KEY"));
+
+            this.request = new Request();
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void mailer(User[] users) {
         try {
             for (User user : users) {
-                Email to = new Email(user.getEmail());
 
+                Email to = new Email(user.getEmail());
                 Content content = new Content("text/plain",
-                    String.format("Hello %s %s,\n Welcome to the " +
-                            "NickDim database. You are currently #%s of %s members.",
+                    String.format("Hello %s %s,\n Thank you for participating " +
+                            "in the NickDim database. You are currently #%s of %s members.",
                         user.getfName(), user.getlName(), user.getPK(), database.getFanCount()
                     )
                 );
 
-                this.mail = new Mail(from, subject, to, content);
+                Mail mail = new Mail(from, "NickDim " +
+                    "Database Report", to, content);
 
                 request.setMethod(Method.POST);
                 request.setEndpoint("mail/send");
@@ -55,6 +64,31 @@ public class MailService {
                 sg.api(request);
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void singleMail(User user) {
+        try {
+            Content content = new Content("text/plain",
+                String.format("Hello %s %s,\n" +
+                        "Thank you for joining the NickDim database." +
+                        " You are currently " +
+                        "member %s of %s", user.getfName(),
+                    user.getlName(), user.getPK()
+                    , database.getFanCount()));
+
+            Mail mail = new Mail(from, "Welcome " +
+                "To The NickDim Database",
+                new Email(user.getEmail()), content);
+
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+
+            sg.api(request);
+        }
+        catch(Exception e) {
             e.printStackTrace();
         }
     }

@@ -24,10 +24,12 @@ public class API {
 
   private Gson gson;
   private Database database;
+  private MailService mailService;
 
   public API() {
     this.gson = new Gson();
     this.database = new Database();
+    this.mailService = new MailService();
   }
 
   private void startServer() {
@@ -48,12 +50,21 @@ public class API {
       response.type("application/json");
       JsonObject returnMsg = new JsonObject();
       try {
-        database.addUser(
+        User user = new User(
+            Integer.parseInt(database.addUser(
+                request.queryParams("fName"),
+                request.queryParams("lName"),
+                request.queryParams("email")
+            )),
             request.queryParams("fName"),
-            request.queryParams("lName"),
-            request.queryParams("email")
-        );
+            request.queryParams("lName").toString(),
+            request.queryParams("email").toString());
+
+
         database.commit();
+
+        mailService.singleMail(user);
+
         returnMsg.addProperty("added", true);
       } catch (Exception e) {
         response.status(500);

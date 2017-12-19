@@ -74,18 +74,28 @@ public class Database {
         }
     }
 
-    public void addUser(String uifName, String uilName, String email) throws SQLException {
+    public String addUser(
+        String uifName, String uilName, String email)
+        throws SQLException {
         try {
 
-            PreparedStatement insertStatement = con.prepareStatement("INSERT INTO" +
-                " nickdimfans (FirstName, LastName, Email) " +
-                "VALUES (?,?,?)");
+            PreparedStatement insertStatement = con.prepareStatement("INSERT" +
+                " INTO" + " nickdimfans " +
+                "(FirstName, LastName, Email) VALUES (?,?,?)");
 
             insertStatement.setString(1, uifName);
             insertStatement.setString(2, uilName);
             insertStatement.setString(3, email);
 
             insertStatement.executeUpdate();
+
+            PreparedStatement selectPK = con.prepareStatement(
+                "SELECT ID from nickdimfans WHERE email = ?");
+
+            selectPK.setString(1, email);
+            ResultSet rs = insertStatement.executeQuery();
+
+            return rs.toString();
 
         } catch (Exception e) {
             e.printStackTrace();
