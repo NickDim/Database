@@ -27,7 +27,7 @@ public class MailService {
         try {
 
             Properties sgProperties = new Properties();
-            sgProperties.load(new FileInputStream("sendgrid.properties"));
+            sgProperties.load(new FileInputStream("sg.properties"));
 
             this.database = new Database();
             this.users = database.getUsers();
