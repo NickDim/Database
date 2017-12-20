@@ -11,22 +11,21 @@ public class MailService {
     public static void main(String[] args) {
         MailService mail = new MailService();
         Database database = mail.database;
-
-        mail.mailer(mail.users);
     }
 
     private Database database;
     private User[] users;
 
     private Email from;
-
     private SendGrid sg;
     private Request request;
+
+    private Properties sgProperties;
 
     public MailService() {
         try {
 
-            Properties sgProperties = new Properties();
+            this.sgProperties = new Properties();
             sgProperties.load(new FileInputStream("sg.properties"));
 
             this.database = new Database();
@@ -57,6 +56,16 @@ public class MailService {
                 Mail mail = new Mail(from, "NickDim " +
                     "Database Report", to, content);
 
+                Attachments attachment = new Attachments();
+                String data = sgProperties
+                    .getProperty("base64Image").trim();
+                attachment.setContent(data);
+                attachment.setType("image/png");
+                attachment.setFilename("nickdim-1.5.png");
+                attachment.setDisposition("inline");
+                attachment.setContentId("NickDim");
+                mail.addAttachments(attachment);
+
                 request.setMethod(Method.POST);
                 request.setEndpoint("mail/send");
                 request.setBody(mail.build());
@@ -81,6 +90,16 @@ public class MailService {
             Mail mail = new Mail(from, "Welcome " +
                 "To The NickDim Database",
                 new Email(user.getEmail()), content);
+
+            Attachments attachment = new Attachments();
+            String data = sgProperties
+                .getProperty("base64Image").trim();
+            attachment.setContent(data);
+            attachment.setType("image/png");
+            attachment.setFilename("nickdim-1.5.png");
+            attachment.setDisposition("inline");
+            attachment.setContentId("NickDim");
+            mail.addAttachments(attachment);
 
             request.setMethod(Method.POST);
             request.setEndpoint("mail/send");
