@@ -91,10 +91,8 @@ public class MailService {
                 "To The NickDim Database",
                 new Email(user.getEmail()), content);
 
-            Attachments attachment = new Attachments();
-            String data = sgProperties
-                .getProperty("base64Image").trim();
-            attachment.setContent(data);
+            Attachments attachment = new Attachments()
+            attachment.setContent("NickDim");
             attachment.setType("image/png");
             attachment.setFilename("nickdim-1.5.png");
             attachment.setDisposition("inline");
